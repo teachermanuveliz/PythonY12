@@ -14,22 +14,33 @@ CREATE TABLE IF NOT EXISTS students (
 )
 """)
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS teachers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT,
+    phone INTEGER
+)
+""")
+
 # 3. Insert some data
 cursor.execute("INSERT INTO students (name, age, grade) VALUES (?, ?, ?)", ("Anna", 16, "10A"))
-cursor.execute("INSERT INTO students (name, age, grade) VALUES (?, ?, ?)", ("Luis", 17, "11B"))
-cursor.execute("INSERT INTO students (name, age, grade) VALUES (?, ?, ?)", ("Marta", 15, "9C"))
-cursor.execute("INSERT INTO students (name, age, grade) VALUES (?, ?, ?)", ("Pedro", 19, "9C"))
+cursor.execute('UPDATE students SET name = "ID10" WHERE id = 10')
+
+cursor.execute("INSERT INTO teachers (name, email, phone) VALUES (?, ?, ?)", ("Anna", "anna@gmail.com", "123456789"))
+cursor.execute('UPDATE teachers SET phone = "1001" WHERE id = 10')
+cursor.execute('DELETE FROM teachers WHERE id > 10')
 
 # Commit the changes
 connection.commit()
 
 # 4. Query the data
-cursor.execute("SELECT * FROM students")
-students = cursor.fetchall()
+cursor.execute("SELECT * FROM teachers")
+teachers = cursor.fetchall()
 
-print("List of students:")
-for student in students:
-    print(student)
+print("List of teachers:")
+for teacher in teachers:
+    print(teacher)
 
 # 5. Close the connection
 connection.close()
